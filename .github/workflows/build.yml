@@ -1,0 +1,23 @@
+name: Build .NET Framework WinForms App
+ 
+on:
+  push:
+    branches: [main]
+ 
+jobs:
+  build:
+    name: Build on Windows
+    runs-on: self-hosted  # Your self-hosted Windows runner
+ 
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+ 
+    - name: Setup MSBuild Path
+      uses: microsoft/setup-msbuild@v1.1
+      with:
+        vs-version: 'latest'
+ 
+    - name: Build solution
+      run: |
+        msbuild SimpleWinFormsApp.sln /p:Configuration=Release
