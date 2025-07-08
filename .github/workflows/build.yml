@@ -1,16 +1,16 @@
-name: Build .NET Framework WinForms App
+name: Build and Run WinForms App
  
 on:
   push:
     branches: [main]
  
 jobs:
-  build:
-    name: Build on Windows
-    runs-on: self-hosted  # Your self-hosted Windows runner
+  build-and-run:
+    name: Build & Run on Windows
+    runs-on: self-hosted  # your self-hosted Windows runner
  
     steps:
-    - name: Checkout code
+    - name: Checkout Code
       uses: actions/checkout@v4
  
     - name: Setup MSBuild Path
@@ -18,6 +18,9 @@ jobs:
       with:
         vs-version: 'latest'
  
-    - name: Build solution
+    - name: Build the Solution
+      run: msbuild SimpleWinFormsApp.sln /p:Configuration=Release
+ 
+    - name: Run the WinForms App
       run: |
-        msbuild SimpleWinFormsApp.sln /p:Configuration=Release
+        start "" "$(pwd)\SimpleWinFormsApp\bin\Release\SimpleWinFormsApp.exe"
